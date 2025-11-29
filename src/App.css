@@ -708,3 +708,16 @@
 .navbar-actions a:hover {
   text-decoration: none !important;
 }
+
+/* Remove underline from all links globally */
+a {
+  text-decoration: none !important;
+}
+
+/* Also remove underline when a button contains a link */
+.btn a,
+.btn-primary a,
+.btn-outline a {
+  text-decoration: none !important;
+  color: inherit; /* keeps text the button colour */
+}

@@ -14,23 +14,24 @@ const Hero = () => {
 
 <div className="hero-actions">
   <a
-    className="btn btn-primary"
     href="https://bonk.fun/token/758yZPp2QEmrMgMACiUS2K2sTLsfSw9NprWoGxdxbonk"
     target="_blank"
     rel="noopener noreferrer"
+    className="btn btn-primary"
   >
     Buy $FF
   </a>
 
   <a
-    className="btn btn-outline"
     href="https://x.com/i/communities/1994507546619736378"
     target="_blank"
     rel="noopener noreferrer"
+    className="btn btn-outline"
   >
     Join the community
   </a>
 </div>
+
 
 
         <p className="hero-note">
