@@ -1,16 +1,20 @@
 import { useState } from "react";
 
 const BuyFFSection = () => {
-  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
-  const handleCopyCA = () => {
-    navigator.clipboard.writeText("758yZPp2QEmrMgMACiUS2K2sTLsfSw9NprWoGxdxbonk");
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 1800);
+  const handleCopyCA = async () => {
+    try {
+      await navigator.clipboard.writeText("758yZPp2QEmrMgMACiUS2K2sTLsfSw9NprWoGxdxbonk");
+      setToastMessage("Contract copied");
+    } catch (err) {
+      setToastMessage("Clipboard blocked — press Ctrl+C");
+    }
+    setTimeout(() => setToastMessage(""), 1800);
   };
 
   return (
-    <section id="buy" className="section section-buy">
+    <section id="buy" className="section section-buy reveal">
       <div className="section-header">
         <p className="section-kicker">Buy $FF</p>
         <h2>Three steps to join the movement.</h2>
@@ -20,8 +24,6 @@ const BuyFFSection = () => {
       </div>
 
       <div className="grid grid-3">
-
-        {/* STEP 1 */}
         <div className="card card-highlight">
           <span className="step-label">Step 1</span>
           <h3>Buy SOL in Phantom</h3>
@@ -31,7 +33,6 @@ const BuyFFSection = () => {
           </p>
         </div>
 
-        {/* STEP 2 */}
         <div className="card">
           <div className="step-label">Step 2</div>
           <h3>Paste the $FF contract</h3>
@@ -44,12 +45,14 @@ const BuyFFSection = () => {
             className="contract-pill"
             onClick={handleCopyCA}
             style={{ cursor: "pointer", userSelect: "none" }}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && handleCopyCA()}
           >
             Copy CA
           </div>
         </div>
 
-        {/* STEP 3 */}
         <div className="card card-highlight">
           <span className="step-label">Step 3</span>
           <h3>Hold your ticket to freedom</h3>
@@ -60,10 +63,9 @@ const BuyFFSection = () => {
         </div>
       </div>
 
-      {/* Toast Notification */}
-      {showToast && (
-        <div className="toast">
-          CA Copied ✔
+      {toastMessage && (
+        <div className="toast" role="status" aria-live="polite">
+          {toastMessage}
         </div>
       )}
     </section>

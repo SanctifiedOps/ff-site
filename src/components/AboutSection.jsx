@@ -1,6 +1,6 @@
 const AboutSection = () => {
   return (
-    <section id="about" className="section">
+    <section id="about" className="section reveal">
       <div className="section-header">
         <p className="section-kicker">About</p>
         <h2>Breaking out of the default setting.</h2>

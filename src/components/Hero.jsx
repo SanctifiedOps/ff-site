@@ -1,8 +1,8 @@
-import ffLogo from "../assets/ff-logo.png";
+import ffCoin from "../assets/ff-coin.png";
 
 const Hero = () => {
   return (
-    <section className="hero">
+    <section className="hero reveal">
       <div className="hero-content">
         <p className="pill">Solana native • Community owned</p>
         <h1>Financial freedom is earned, not given.</h1>
@@ -12,27 +12,34 @@ const Hero = () => {
           ideas, accountability, and conviction so more of us can buy back our time.
         </p>
 
-<div className="hero-actions">
-  <a
-    href="https://bonk.fun/token/758yZPp2QEmrMgMACiUS2K2sTLsfSw9NprWoGxdxbonk"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="btn btn-primary"
-  >
-    Buy $FF
-  </a>
+        <div className="hero-actions">
+          <a
+            href="https://bonk.fun/token/758yZPp2QEmrMgMACiUS2K2sTLsfSw9NprWoGxdxbonk"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary"
+          >
+            Buy $FF
+          </a>
 
-  <a
-    href="https://x.com/i/communities/1994507546619736378"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="btn btn-outline"
-  >
-    Join the community
-  </a>
-</div>
+          <a
+            href="https://x.com/i/communities/1994507546619736378"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-outline"
+          >
+            X Community
+          </a>
 
-
+          <a
+            href="https://www.tiktok.com/@financiallyfreeusd1"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-outline"
+          >
+            Follow on TikTok
+          </a>
+        </div>
 
         <p className="hero-note">
           No promises, no shortcuts, just a group of people serious about building lives
@@ -44,8 +51,8 @@ const Hero = () => {
         <div className="hero-logo-wrapper">
           <div className="hero-logo-ring">
             <img
-              src={ffLogo}
-              alt="Financial Freedom logo"
+              src={ffCoin}
+              alt="Financial Freedom coin"
               className="hero-logo-image"
             />
           </div>

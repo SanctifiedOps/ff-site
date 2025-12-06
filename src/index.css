@@ -33,3 +33,7 @@ body {
   background: radial-gradient(circle at top left, #222222 0, #050505 50%, #000000 100%);
   color: var(--ff-text);
 }
+
+html {
+  scroll-behavior: smooth;
+}

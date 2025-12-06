@@ -1,6 +1,6 @@
 const MissionSection = () => {
   return (
-    <section id="mission" className="section section-mission">
+    <section id="mission" className="section section-mission reveal">
       <div className="section-header">
         <p className="section-kicker">Mission</p>
         <h2>Our path to financial freedom.</h2>

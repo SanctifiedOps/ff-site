@@ -1,6 +1,6 @@
 const LinksSection = () => {
   return (
-    <section id="links" className="section section-links">
+    <section id="links" className="section section-links reveal">
       <header className="section-header">
         <div className="section-kicker">Links</div>
         <h2>Follow the freedom stack.</h2>
@@ -41,6 +41,17 @@ const LinksSection = () => {
         >
           <span>Buy $FF</span>
           <span className="link-tag">Swap SOL for Financial Freedom</span>
+        </a>
+
+        {/* TikTok */}
+        <a
+          href="https://www.tiktok.com/@financiallyfreeusd1"
+          target="_blank"
+          rel="noreferrer"
+          className="link-tile"
+        >
+          <span>TikTok</span>
+          <span className="link-tag">Clips & community moments</span>
         </a>
       </div>
     </section>

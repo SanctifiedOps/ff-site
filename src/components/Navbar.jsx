@@ -1,90 +1,84 @@
-// src/components/Navbar.jsx
-import {useState} from "react";
+import { useEffect, useState } from "react";
 import ffLogo from "../assets/ff-logo.png";
 
 const CONTRACT_ADDRESS = "758yZPp2QEmrMgMACiUS2K2sTLsfSw9NprWoGxdxbonk";
 
 const Navbar = () => {
-  const [copied,setCopied] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [toast, setToast] = useState("");
+  const [navOpen, setNavOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => setToast(""), 1800);
+    return () => clearTimeout(timer);
+  }, [toast]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 12);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const handleScroll = (sectionId) => {
     const target = document.getElementById(sectionId);
-    if(!target) return;
+    if (!target) return;
 
-    const yOffset = -80; // small offset so section title is not hidden under navbar
+    const yOffset = -80;
     const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
     window.scrollTo({
-      top:y,
-      behavior:"smooth"
+      top: y,
+      behavior: "smooth"
     });
+    setNavOpen(false);
   };
 
-  const handleNavClick = (event,sectionId) => {
+  const handleNavClick = (event, sectionId) => {
     event.preventDefault();
     handleScroll(sectionId);
   };
 
-  const handleCopyCA = () => {
-    navigator.clipboard.writeText(CONTRACT_ADDRESS).then(() => {
+  const handleCopyCA = async () => {
+    try {
+      await navigator.clipboard.writeText(CONTRACT_ADDRESS);
       setCopied(true);
-      setTimeout(() => {
-        setCopied(false);
-      },1800);
-    }).catch(() => {
-      // fail silently for now
-    });
-  };
-
-  const copyBtnStyle = {
-    transition:"transform 0.18s ease, box-shadow 0.18s ease",
-    ...(copied ? {
-      boxShadow:"0 0 18px rgba(245,185,65,0.7)",
-      transform:"translateY(-1px) scale(1.03)"
-    } : {})
-  };
-
-  const toastStyle = {
-    position:"fixed",
-    top:"16px",
-    left:"50%",
-    transform:"translateX(-50%)",
-    padding:"6px 14px",
-    borderRadius:"999px",
-    background:"rgba(0,0,0,0.9)",
-    border:"1px solid rgba(245,185,65,0.6)",
-    color:"#f7f7f7",
-    fontSize:"0.78rem",
-    letterSpacing:"0.08em",
-    textTransform:"uppercase",
-    zIndex:9999
+      setToast("Contract copied");
+      setTimeout(() => setCopied(false), 1200);
+    } catch (err) {
+      setToast("Clipboard blocked — press Ctrl+C");
+    }
   };
 
   return (
     <>
-      {copied && (
-        <div style={toastStyle}>
-          Copied ✓
+      {toast && (
+        <div className="toast" role="status" aria-live="polite">
+          {toast}
         </div>
       )}
 
-      <nav className="navbar">
+      <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}>
         <div className="navbar-left">
           <img src={ffLogo} alt="Financial Freedom" className="navbar-logo" />
           <div className="navbar-brand">Financial Freedom</div>
         </div>
 
         <div className="navbar-links">
-          <a href="#about" onClick={(event) => handleNavClick(event,"about")}>
+          <a href="#about" onClick={(event) => handleNavClick(event, "about")}>
             About
           </a>
-          <a href="#mission" onClick={(event) => handleNavClick(event,"mission")}>
+          <a href="#mission" onClick={(event) => handleNavClick(event, "mission")}>
             Mission
           </a>
-          <a href="#media" onClick={(event) => handleNavClick(event,"media")}>
+          <a href="#media" onClick={(event) => handleNavClick(event, "media")}>
             Media
           </a>
-          <a href="#links" onClick={(event) => handleNavClick(event,"links")}>
+          <a href="#links" onClick={(event) => handleNavClick(event, "links")}>
             Links
           </a>
         </div>
@@ -93,9 +87,9 @@ const Navbar = () => {
           <button
             className="btn btn-secondary"
             onClick={handleCopyCA}
-            style={copyBtnStyle}
+            aria-label="Copy contract address"
           >
-            Copy CA
+            {copied ? "Copied" : "Copy CA"}
           </button>
 
           <a
@@ -107,7 +101,54 @@ const Navbar = () => {
             Buy $FF
           </a>
         </div>
+
+        <button
+          className="navbar-toggle"
+          onClick={() => setNavOpen((open) => !open)}
+          aria-label="Toggle navigation"
+          aria-expanded={navOpen}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
       </nav>
+
+      <div
+        className={`navbar-overlay ${navOpen ? "open" : ""}`}
+        onClick={() => setNavOpen(false)}
+      />
+
+      <div className={`navbar-drawer ${navOpen ? "open" : ""}`}>
+        <div className="drawer-links">
+          <a href="#about" onClick={(event) => handleNavClick(event, "about")}>
+            About
+          </a>
+          <a href="#mission" onClick={(event) => handleNavClick(event, "mission")}>
+            Mission
+          </a>
+          <a href="#media" onClick={(event) => handleNavClick(event, "media")}>
+            Media
+          </a>
+          <a href="#links" onClick={(event) => handleNavClick(event, "links")}>
+            Links
+          </a>
+        </div>
+
+        <div className="drawer-actions">
+          <button className="btn btn-secondary" onClick={handleCopyCA}>
+            {copied ? "Copied" : "Copy CA"}
+          </button>
+          <a
+            className="btn btn-primary"
+            href="https://bonk.fun/token/758yZPp2QEmrMgMACiUS2K2sTLsfSw9NprWoGxdxbonk"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Buy $FF
+          </a>
+        </div>
+      </div>
     </>
   );
 };
